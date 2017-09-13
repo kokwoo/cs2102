@@ -2,8 +2,6 @@
 include 'DbConnection.php';
 
 $db = DbConnection::getInstance();
-
-
 ?>
 
 <!DOCTYPE html>
