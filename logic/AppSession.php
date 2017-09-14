@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 class AppSession {
 
     private static $user = 'USERID';
@@ -7,6 +9,8 @@ class AppSession {
     private static $doNotRequireLogin = array ("login", "signup", "aboutus");
 
     public static function getCurrentUser() {
+        self::requireValidUser();
+
         return $_SESSION[$user];
     }
 
