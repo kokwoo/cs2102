@@ -1,5 +1,6 @@
 <?php
 include 'DbConnection.php';
+include 'includes/HtmlUtilities.php';
 
 $db = DbConnection::getInstance();
 ?>
@@ -30,17 +31,7 @@ $db = DbConnection::getInstance();
     </style>
   </head>
   <body style="background:url('images/login-bg.jpg'); background-size:cover;">
-    <nav class="navbar navbar-light navbar-expand-lg" style="background-color: #e9ecef;">
-      <a class="navbar-brand" href="#">CS2102</a>
-
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-item nav-link active" href="#">Home</a>
-          <a class="nav-item nav-link" href="#">Lend Items</a>
-          <a class="nav-item nav-link" href="#">Borrow Items</a>
-        </div>
-      </div>
-    </nav>
+    <?php HtmlUtilities::printHeader(); ?>
     <div class="container">
       <div class="row">
         <div class="Absolute-Center is-Responsive">
@@ -76,13 +67,7 @@ $db = DbConnection::getInstance();
       </div>
     </div>
 
-    <nav class="navbar navbar-dark bg-dark fixed-bottom">
-      <a class="navbar-brand" href="#">Team 19</a>
-
-      <span class="navbar-text">
-      <a href="#"> About us </a>
-      </span>
-    </nav>
+    <?php HtmlUtilities::printFooter(); ?>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
