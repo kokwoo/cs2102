@@ -2,7 +2,9 @@
 include 'DbConnection.php';
 include 'includes/HtmlUtilities.php';
 
-$db = DbConnection::getInstance();
+if (AppSession::hasValidUser()) {
+  header('location:index.php');
+}
 ?>
 
 <!DOCTYPE html>

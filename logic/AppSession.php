@@ -11,19 +11,23 @@ class AppSession {
     public static function getCurrentUser() {
         self::requireValidUser();
 
-        return $_SESSION[$user];
+        return $_SESSION[self::$user];
     }
 
     public static function setCurrentUser($newUser) {
-        $_SESSION[$user] = $newUser;
+        $_SESSION[self::$user] = $newUser;
     }
 
     public static function logCurrentUserOut() {
-        $_SESSION[$user] = NULL;
+        unset($_SESSION[self::$user]);
+    }
+
+    public static function hasValidUser() {
+        return isset($_SESSION[self::$user]);
     }
 
     public static function requireValidUser() {
-        if (is_null($_SESSION[$user])) {
+        if (!isset($_SESSION[self::$user])) {
             header('Location: login.php');
             exit();
         }
