@@ -19,7 +19,11 @@ class DbConnection {
             self::$instance = new self();
         }
 
-        return self::$instance->dbConnection;
+        return self::$instance;
+    }
+
+    public function executeQuery(string $query , array $params) {
+        return pg_query_params($this->dbConnection, $query, $params);
     }
 }
 

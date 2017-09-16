@@ -19,7 +19,8 @@ class HtmlUtilities {
 EOT;
 
         if (AppSession::doesPageRequireLogin($_SERVER['REQUEST_URI'])) {
-            print '<span class="navbar-text"> Welcome, ' . AppSession::getCurrentUser() . ' </span> ';
+            print '<span class="navbar-text"> Welcome, ' . AppSession::getCurrentUser();
+            print ' (<a href="logout.php">Logout</a>)</span>';
         }
 
         print <<<EOT

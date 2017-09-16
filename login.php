@@ -30,7 +30,7 @@ $db = DbConnection::getInstance();
       }
     </style>
   </head>
-  <body style="background:url('images/login-bg.jpg'); background-size:cover;">
+  <body style="background:url('images/login-bg.jpg') no-repeat center center fixed; background-size:cover;">
     <?php HtmlUtilities::printHeader(); ?>
     <div class="container">
       <div class="row">
@@ -39,7 +39,10 @@ $db = DbConnection::getInstance();
             <div class="jumbotron col-sm-6 border border-secondary">
               <h1 class="display-4">Login</h1>
               <hr class="my-4">
-              <form action="login.php" id="loginForm" method="POST">
+              <div class="alert alert-danger" id="incorrectDetails" role="alert" style="display:none;">
+                Username and/or password is incorrect.
+              </div>
+              <form id="loginForm">
                 <div class="form-group">
                   <label for="userid"> User ID </label>
                   <input class="form-control" type="text" id="userid" name='username' placeholder="User ID"/>
@@ -49,7 +52,7 @@ $db = DbConnection::getInstance();
                   <input class="form-control" type="password" id="password" name='password' placeholder="Password"/>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Sign in</button>
+                <input type="button" id="login" class="btn btn-primary" value="Sign in" />
             </form>
 
             </div>
@@ -60,7 +63,7 @@ $db = DbConnection::getInstance();
               <p class="lead"> Signing up is free and takes no time at all.</p>
               <hr class="my-4">
               <p> So sign up today!</p>
-              <input  value="Sign Up" type="button" class="btn btn-lg btn-primary" id="signUp" onClick="document.location.href='index.php'"/>
+              <input value="Sign Up" type="button" class="btn btn-lg btn-primary" id="signUp" onClick="document.location.href='signup.php'"/>
             </div>
           </div>
         </div>
@@ -71,8 +74,9 @@ $db = DbConnection::getInstance();
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/loginJs.js"></script>
   </body>
 </html>
