@@ -1,5 +1,23 @@
 <?php
 include 'includes/HtmlUtilities.php';
+include 'DbConnection.php';
+
+$db = DbConnection::getInstance();
+
+if (isset($_POST['formSubmitted'])){
+  $result = $db->executeQuery(
+      "INSERT INTO users VALUES($1, $2, $3, $4, $5, now() )", 
+      array(
+        $_POST['username'], 
+        $_POST['name'], 
+        hash("sha256", $_POST['password'], false), 
+        $_POST['address'],
+        'user'
+      ));
+  if (pg_affected_rows($result) === 1) {
+    header('location:signup.php?success=true');
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -12,6 +30,14 @@ include 'includes/HtmlUtilities.php';
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+    <style type="text/css">
+
+    .error {
+      border-color:#dc3545 !important;
+    }
+
+    </style>
   </head>
 <body style="padding-bottom:70px;">
   <?php HtmlUtilities::printHeader(); ?>
@@ -19,11 +45,15 @@ include 'includes/HtmlUtilities.php';
       <h1 class="display-3">Sign up</h1>
       <p class="lead"> Join the growing community of ShareStuff </p>
 
+      <div class="alert alert-success" id="success" role="alert" style="display:none;">
+        Your account has been successfully created. You can log into it now.
+      </div>
+
       <div class="row">
         <div class="col-sm-10">
-          <h4> Account details</h4>
-          <hr>
-          <form id="signup" class="form" novalidate>
+          <form id="signup" class="form" action="signup.php" method="POST" novalidate>
+            <h4> Account details</h4>
+            <hr>
             <div class="form-group">
               <label for="userid"> User ID </label>
               <input class="form-control" type="text" id="userid" name='username' placeholder="User ID" required />
@@ -33,13 +63,16 @@ include 'includes/HtmlUtilities.php';
               <div class="invalid-feedback">
                 Please provide a valid user id.
               </div>
+              <div id="userinuse" class="invalid-feedback" style="display:none;">
+                The user id you chosen is in use by someone else. Please choose another user id.
+              </div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="password">Password</label>
                 <input class="form-control" type="password" id="password" name='password' placeholder="Password" required/>
                 <small id="passwordHelpBlock" class="form-text text-muted">
-                  Your password must be at least 8 characters long and can contain any combination of letters, numbers and special characters.
+                  Your password can contain any combination of letters, numbers and special characters.
                 </small>
                 <div class="invalid-feedback">
                   Please enter a password.
@@ -52,7 +85,10 @@ include 'includes/HtmlUtilities.php';
                   Re-enter your password to confirm it.
                 </small>
                 <div class="invalid-feedback">
-                  Please reenter a password.
+                  Please reenter the password.
+                </div>
+                <div id="passdontmatch" class="invalid-feedback" style="display:none;">
+                  Your passwords don't match! Please re-enter your password.
                 </div>
               </div>
             </div>
@@ -83,7 +119,7 @@ include 'includes/HtmlUtilities.php';
                 Please provide a valid address.
               </div>
             </div>
-
+            <input type="hidden" name="formSubmitted" value="true" />
             <button class="btn btn-primary" type="submit" id="createaccount">Create Account</button>
           </form>
         </div>
