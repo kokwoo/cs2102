@@ -24,7 +24,7 @@ $db = DbConnection::getInstance();
       }
 
       .Absolute-Center.is-Responsive {
-        width: 50%; 
+        width: 50%;
         height: 50%;
         padding: 40px;
       }
@@ -39,14 +39,14 @@ $db = DbConnection::getInstance();
             <div class="jumbotron col-sm-6 border border-secondary">
               <h1 class="display-4">Login</h1>
               <hr class="my-4">
-              <form action="" id="loginForm">
+              <form action="login.php" id="loginForm" method="POST">
                 <div class="form-group">
                   <label for="userid"> User ID </label>
-                  <input class="form-control" type="text" id="userid" name='username' placeholder="User ID"/>          
+                  <input class="form-control" type="text" id="userid" name='username' placeholder="User ID"/>
                 </div>
                 <div class="form-group">
                   <label for="password"> Password </label>
-                  <input class="form-control" type="password" id="password" name='password' placeholder="Password"/>     
+                  <input class="form-control" type="password" id="password" name='password' placeholder="Password"/>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Sign in</button>
@@ -60,7 +60,7 @@ $db = DbConnection::getInstance();
               <p class="lead"> Signing up is free and takes no time at all.</p>
               <hr class="my-4">
               <p> So sign up today!</p>
-              <button type="button" class="btn btn-lg btn-primary">Sign up</button>
+              <input  value="Sign Up" type="button" class="btn btn-lg btn-primary" id="signUp" onClick="document.location.href='index.php'"/>
             </div>
           </div>
         </div>
