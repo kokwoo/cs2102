@@ -7,11 +7,11 @@ class HtmlUtilities {
     public static function printHeader() {
         print <<<EOT
     <nav class="navbar navbar-light navbar-expand-lg" style="background-color: #e9ecef;">
-        <a class="navbar-brand" href="#">CS2102</a>
+        <a class="navbar-brand" href="index.php">ShareStuff</a>
 
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav mr-auto">
-                <a class="nav-item nav-link active" href="#">Home</a>
+                <a class="nav-item nav-link active" href="index.php">Home</a>
                 <a class="nav-item nav-link" href="#">Lend Items</a>
                 <a class="nav-item nav-link" href="#">Borrow Items</a>
             </div>

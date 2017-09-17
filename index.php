@@ -13,10 +13,88 @@ include 'includes/HtmlUtilities.php';
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
   </head>
-<body style="padding-bottom:70px;">
-  <?php HtmlUtilities::printHeader(); ?>
-    <div class="container">
 
+  <body style="padding-bottom:70px;">
+    <?php HtmlUtilities::printHeader(); ?>
+    
+    <div class="container">
+      <h1 class="display-4 text-center">Account Overview</h1>
+
+      <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-10">
+          <hr>
+
+          <form>
+            <div class="input-group">
+              <input class="form-control" type="text" placeholder="Search for a item to borrow" />
+              <span class="input-group-btn">
+                <button class="btn btn-primary" type="button">Search</button>
+              </span>
+            </div>
+            <div class="form-group mt-sm-1">
+              <button class="btn btn-secondary btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                Advanced Search
+              </button>
+
+              <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="row mt-sm-3">
+        <div class="col-sm-12">
+          <h3> Pending transactions </h3>
+
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Item Name</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+
+      <div class="row mt-sm-3">
+        <div class="col-sm-12">
+          <h3> Recently borrowed </h3>
+
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Item Name</th>
+                <th>Borrowed From</th>
+                <th>Fee</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+
+      <div class="row mt-sm-3">
+        <div class="col-sm-12">
+          <h3> Recently lent out </h3>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Item Name</th>
+                <th>Lent to</th>
+                <th>Fee</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+    
     </div>
     <?php HtmlUtilities::printFooter(); ?>
 
