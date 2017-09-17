@@ -12,7 +12,7 @@ if (isset($_POST['formSubmitted'])){
         $_POST['name'], 
         hash("sha256", $_POST['password'], false), 
         $_POST['address'],
-        'user'
+        'users'
       ));
   if (pg_affected_rows($result) === 1) {
     header('location:signup.php?success=true');
