@@ -7,11 +7,23 @@ CREATE TABLE users  (
   lastlogin TIMESTAMP NOT NULL
 );
 
-CREATE TABLE item (
-  itemId INTEGER PRIMARY KEY,
-  type VARCHAR(64),
-  name VARCHAR(255),
-  price NUMERIC,
-  avaliability BOOLEAN,
-  date_posted DATE now()
+CREATE TABLE items (
+  itemid INTEGER PRIMARY KEY,
+  type VARCHAR(64) REFERENCES types(type) ON DELETE CASCADE,
+  name VARCHAR(255) NOT NULL,
+  price NUMERIC NOT NULL,
+  avaliability INTEGER NOT NULL,
+  postedon DATE now(),
+  postedby VARCHAR(64) REFERENCES users(userid)
+);
+
+CREATE TABLE itemimages (
+    imageid INTEGER PRIMARY KEY,
+    imagename CHAR(36) NOT NULL,
+    itemid INTEGER REFERENCES items(itemid) ON DELETE CASCADE
+);
+
+CREATE TABLE types (
+    type VARCHAR(64) PRIMAY KEY,
+    subType VARCHAR(64) NOT NULL
 );
