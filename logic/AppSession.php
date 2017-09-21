@@ -4,7 +4,7 @@ session_start();
 
 class AppSession {
 
-    private static $user = 'USERID';
+    public static $user = 'USERID';
 
     private static $doNotRequireLogin = array ("login", "signup", "aboutus");
 
