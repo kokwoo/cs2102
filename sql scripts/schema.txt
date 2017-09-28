@@ -13,7 +13,7 @@ CREATE TABLE items (
   name VARCHAR(255) NOT NULL,
   price NUMERIC NOT NULL,
   avaliability INTEGER NOT NULL,
-  postedon DATE now(),
+  postedon TIMESTAMP now(),
   postedby VARCHAR(64) REFERENCES users(userid)
 );
 
@@ -21,3 +21,12 @@ CREATE TABLE types (
     type VARCHAR(64) PRIMAY KEY,
     subType VARCHAR(64) NOT NULL
 );
+
+CREATE TABLE bids {
+  id INTEGER PRIMARY KEY,
+  userid VARCHAR(64) REFERENCES users(userid),
+  itemid INTEGER REFERENCES items(itemid),
+  bidamount NUMERIC NOT NULL CHECK(bidamount >= 0),
+  biddedon TIMESTAMP now(),
+  status INTEGER NOT NULL
+}
