@@ -7,26 +7,31 @@ CREATE TABLE users  (
   lastlogin TIMESTAMP NOT NULL
 );
 
+CREATE TABLE types (
+    type VARCHAR(64) PRIMARY KEY,
+    subType VARCHAR(64) NOT NULL
+);
+
 CREATE TABLE items (
-  itemid INTEGER PRIMARY KEY,
+  itemid SERIAL PRIMARY KEY,
   type VARCHAR(64) REFERENCES types(type) ON DELETE CASCADE,
   name VARCHAR(255) NOT NULL,
   price NUMERIC NOT NULL,
   avaliability INTEGER NOT NULL,
-  postedon TIMESTAMP now(),
+  postedon TIMESTAMP DEFAULT now(),
   postedby VARCHAR(64) REFERENCES users(userid)
 );
 
-CREATE TABLE types (
-    type VARCHAR(64) PRIMAY KEY,
-    subType VARCHAR(64) NOT NULL
-);
-
-CREATE TABLE bids {
-  id INTEGER PRIMARY KEY,
+CREATE TABLE bids (
   userid VARCHAR(64) REFERENCES users(userid),
   itemid INTEGER REFERENCES items(itemid),
   bidamount NUMERIC NOT NULL CHECK(bidamount >= 0),
-  biddedon TIMESTAMP now(),
-  status INTEGER NOT NULL
-}
+  biddedon TIMESTAMP DEFAULT now(),
+  status INTEGER NOT NULL,
+  PRIMARY KEY (userid, itemid, bidamount)
+);
+
+CREATE TABLE itemimages (
+    imagename CHAR(36) PRIMARY KEY,
+    itemid INTEGER REFERENCES items(itemid) ON DELETE CASCADE
+);
