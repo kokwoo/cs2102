@@ -9,23 +9,24 @@ CREATE TABLE users  (
 
 CREATE TABLE types (
     type VARCHAR(64) PRIMARY KEY,
-    subType VARCHAR(64) NOT NULL
+    supertype VARCHAR(64) REFERENCES types
 );
 
 CREATE TABLE items (
   itemid SERIAL PRIMARY KEY,
   type VARCHAR(64) REFERENCES types(type) ON DELETE CASCADE,
   name VARCHAR(255) NOT NULL,
-  price NUMERIC NOT NULL,
+  price NUMERIC(12,2) NOT NULL,
   avaliability INTEGER NOT NULL,
   postedon TIMESTAMP DEFAULT now(),
-  postedby VARCHAR(64) REFERENCES users(userid)
+  postedby VARCHAR(64) REFERENCES users(userid),
+  description VARCHAR(255)
 );
 
 CREATE TABLE bids (
   userid VARCHAR(64) REFERENCES users(userid),
   itemid INTEGER REFERENCES items(itemid),
-  bidamount NUMERIC NOT NULL CHECK(bidamount >= 0),
+  bidamount NUMERIC(12,2) NOT NULL CHECK(bidamount >= 0),
   biddedon TIMESTAMP DEFAULT now(),
   status INTEGER NOT NULL,
   PRIMARY KEY (userid, itemid, bidamount)
@@ -33,5 +34,6 @@ CREATE TABLE bids (
 
 CREATE TABLE itemimages (
     imagename CHAR(36) PRIMARY KEY,
-    itemid INTEGER REFERENCES items(itemid) ON DELETE CASCADE
+    itemid INTEGER REFERENCES items(itemid) ON DELETE CASCADE,
+    extension CHAR(3) NOT NULL
 );
