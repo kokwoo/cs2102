@@ -14,6 +14,4 @@ abstract class ItemStatus {
     const LoanedOut = 2;
 }
 
-const ITEM_IMAGES_FOLDER = $_SERVER['DOCUMENT_ROOT'] . '/itemimages/';
-
 ?>
