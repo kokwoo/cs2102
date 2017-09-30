@@ -3,6 +3,22 @@ include 'includes/HtmlUtilities.php';
 include 'DbConnection.php';
 
 $db = DbConnection::getInstance();
+
+if (isset($_POST['formSubmitted'])){
+  $result = $db->executeQuery(
+      "INSERT INTO items VALUES($1, $2, $3, $4, $5, now() )",
+      array(
+        $_POST['username'],
+        $_POST['name'],
+        $_POST['password'],
+        $_POST['address'],
+        'users'
+      ));
+  if (pg_affected_rows($result) === 1) {
+    header('location:signup.php?success=true');
+  }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,44 +47,51 @@ $db = DbConnection::getInstance();
                 <h4> Item Details </h4>
                 <hr>
                 <div class="form-group">
-                  <div class="form-group col-md-6">
                     <label for="itemname"> Item Name </label>
                     <input class="form-control" type="text" id="itemname" name='itemname' placeholder="Item Name" required />
                     <small id="itemnamehelp" class="form-text text-muted">
                       This name will be shown on the listing.
                     </small>
-                  </div>
                 </div>
 
                 <div class="form-group">
-                  <div class="form-group col-md-6">
+                       <label for="itemtype">Select type:</label>
+                    <select class="form-control" id="itemtype">
+                      <option value="COLLECTIONS">COLLECTIONS</option>
+                      <option value="CLOTHING">CLOTHING</option>
+                      <option value="HOME AND LIFESTYLE">HOME AND LIFESTYLE</option>
+                      <option value="HOBBIES AND GADGETS">HOBBIES AND GADGETS</option>
+                      <option value="ENTERTAINMENT">ENTERTAINMENT</option>
+                      <option value="OTHER">OTHER</option>
+                    </select>
+                    <small id="itemtypehelp" class="form-text text-muted">
+                      Choose a category for this item.
+                    </small>
+                </div>
+
+                <div class="form-group">
                     <label for="price"> Price </label>
                     <input class="form-control" type="text" id="itemprice" name="itemprice" placeholder="0.00" required/>
                     <small id="itempricehelp" class="form-text text-muted">
-                      You cant set this item for free or a reasonable price.
+                      You can set this item for free or a reasonable price.
                     </small>
-                  </div>
                 </div>
 
                 <div class="form-group">
-                  <div class="form-group col-md-6">
-                    <!-- <form action="upload.php" method="post" enctype="multipart/form-data"> -->
-                      Select image to upload:
-                      <input type="file" name="fileToUpload" id="fileToUpload">
-                      
-                      <input type="submit" value="Upload Image" name="submit">
-                    <!-- </form> -->
-                  </div>
+                  <label for="image"> Select image to upload: </label>
+                  <input id="input-b1" name="input-b1" type="file" class="file">
+                  <small id="itemimagehelp" class="form-text text-muted">
+                    Upload an image here.
+                  </small>
                 </div>
 
+                <input type="hidden" name="formSubmitted" value="true" />
+                <button class="btn btn-primary" type="submit" id="additem">Add Item</button>
               </form>
           </div>
         </div>
-
     </div>
-    <div class="container">
 
-    </div>
 
     <?php HtmlUtilities::printFooter(); ?>
 
