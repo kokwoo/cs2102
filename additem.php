@@ -6,13 +6,12 @@ $db = DbConnection::getInstance();
 
 if (isset($_POST['formSubmitted'])){
   $result = $db->executeQuery(
-      "INSERT INTO items VALUES($1, $2, $3, $4, $5, now() )",
+      "INSERT INTO items VALUES($1, $2, $3)",
       array(
-        $_POST['username'],
-        $_POST['name'],
-        $_POST['password'],
-        $_POST['address'],
-        'users'
+        $_POST['itemname'],
+        $_POST['itemtype'],
+        $_POST['price'],
+        'items'
       ));
   if (pg_affected_rows($result) === 1) {
     header('location:signup.php?success=true');
