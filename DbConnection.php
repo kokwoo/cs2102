@@ -25,6 +25,18 @@ class DbConnection {
     public function executeQuery(string $query , array $params) {
         return pg_query_params($this->dbConnection, $query, $params);
     }
+
+    public function newTransaction() {
+        pg_query($this->dbConnection, "BEGIN");
+    }
+
+    public function commit() {
+        pg_query($this->dbConnection, "COMMIT");
+    }
+
+    public function rollback() {
+        pg_query($this->dbConnection, "ROLLBACK");
+    }
 }
 
 ?>
