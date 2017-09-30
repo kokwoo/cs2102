@@ -25,11 +25,11 @@ include 'includes/HtmlUtilities.php';
         <div class="col-sm-10">
           <hr>
 
-          <form>
+          <form action="search.php" method="POST">
             <div class="input-group">
-              <input class="form-control" type="text" placeholder="Search for a item to borrow" />
+              <input class="form-control" type="text" name="searchterm" placeholder="Search for a item to borrow" />
               <span class="input-group-btn">
-                <button class="btn btn-primary" type="button">Search</button>
+                <button type="submit" class="btn btn-primary" type="button">Search</button>
               </span>
             </div>
             <div class="form-group mt-sm-1">
@@ -39,6 +39,7 @@ include 'includes/HtmlUtilities.php';
 
               <div class="collapse" id="collapseExample">
                 <div class="card card-body">
+                  <input type="hidden" name="search" value="true">
                   Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
                 </div>
               </div>
