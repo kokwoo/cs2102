@@ -11,12 +11,22 @@ class HtmlUtilities {
 
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav mr-auto">
-                <a class="nav-item nav-link active" href="index.php">Home</a>
-                <a class="nav-item nav-link" href="additem.php">Lend Items</a>
-                <a class="nav-item nav-link" href="#">Borrow Items</a>
-            </div>
-        
+
 EOT;
+
+
+    if (AppSession::doesPageRequireLogin($_SERVER['REQUEST_URI'])) {
+      print '<a class="nav-item nav-link active" href="index.php">Home</a>
+      <a class="nav-item nav-link" href="additem.php">Lend Items</a>
+      <a class="nav-item nav-link" href="#">Borrow Items</a>';
+    }
+
+      print <<<EOT
+      </div>
+
+EOT;
+
+
 
         if (AppSession::doesPageRequireLogin($_SERVER['REQUEST_URI'])) {
             print '<span class="navbar-text"> Welcome, ' . AppSession::getCurrentUser();
