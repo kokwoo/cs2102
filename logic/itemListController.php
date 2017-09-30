@@ -18,22 +18,22 @@ class itemListController {
         $db = DbConnection::getInstance();
 
 
-        $result = $db -> executeQuerySafe("SELECT * FROM itemimages, items WHERE itemimages.itemid = items.itemid;");
+        $result = $db -> executeQuery("SELECT * FROM itemimages, items WHERE itemimages.itemid = items.itemid;", array());
 
         while ($row = pg_fetch_assoc($result)) {
           print '<div class="card-deck">';
-          // for ($x = 0; $x < 3; $x++) {
-           print '<div class="card">';
-           print '<img class="card-img-top" src="itemimages/' . $row['imagename'] . '" alt="' . $row['name'] . '">';
-           print '<div class="card-body">';
-           print '<h4 class="card-title">' . $row['name'] . '</h4>';
-           print '<p class="card-text">' . $row['description'] . '</p>';
-           print '</div>';
-           print '<div class="card-footer">';
-           print '<small class="text-muted">Last updated 3 mins ago</small>';
-           print '</div></div>';
+          for ($x = 0; $x < 3; $x++) {
+             print '<div class="card">';
+             print '<img class="card-img-top" src="itemimages/' . $row['imagename'] . '" alt="' . $row['name'] . '">';
+             print '<div class="card-body">';
+             print '<h4 class="card-title">' . $row['name'] . '</h4>';
+             print '<p class="card-text">' . $row['description'] . '</p>';
+             print '</div>';
+             print '<div class="card-footer">';
+             print '<small class="text-muted">Last updated 3 mins ago</small>';
+             print '</div></div>';
 
-          // }
+          }
             print '</div><br>';
         }
 
