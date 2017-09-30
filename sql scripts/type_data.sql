@@ -38,4 +38,4 @@ INSERT INTO types VALUES('Home Office', NULL);
 INSERT INTO types VALUES('Stationery', 'Home Office');
 INSERT INTO types VALUES('Printers', 'Home Office');
 INSERT INTO types VALUES('Scanners', 'Home Office');
-INSERT INTO types VALUES('Others', 'Home Office');
+INSERT INTO types VALUES('Other Home Office Supplies', 'Home Office');
