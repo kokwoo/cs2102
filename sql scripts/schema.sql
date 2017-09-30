@@ -20,7 +20,9 @@ CREATE TABLE items (
   avaliability INTEGER NOT NULL,
   postedon TIMESTAMP DEFAULT now(),
   postedby VARCHAR(64) REFERENCES users(userid),
-  description VARCHAR(255)
+  description VARCHAR(255),
+  pickupat VARCHAR(255) NOT NULL,
+  returnat VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE bids (
@@ -33,7 +35,6 @@ CREATE TABLE bids (
 );
 
 CREATE TABLE itemimages (
-    imagename CHAR(36) PRIMARY KEY,
+    imagename VARCHAR(64) PRIMARY KEY,
     itemid INTEGER REFERENCES items(itemid) ON DELETE CASCADE,
-    extension CHAR(3) NOT NULL
 );

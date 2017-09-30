@@ -1,5 +1,13 @@
 <?php
+define('included', true);
 include 'includes/HtmlUtilities.php';
+include 'logic/itemViewController.php';
+
+if (!isset($_POST['itemid'])) {
+  header('location:index.php');
+}
+
+$itemDetails = itemViewController::getItemDetails();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,45 +20,46 @@ include 'includes/HtmlUtilities.php';
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
   </head>
-  <body>
+  <body style="padding-bottom:70px;">
     <?php HtmlUtilities::printHeader(); ?>
 
     <div class="container">
       <h1 class="display-3">Item Details</h1>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Tools</a></li>
-        <li class="breadcrumb-item"><a href="#">Hardware</a></li>
-        <li class="breadcrumb-item active">Drills</li>
+        <?php itemViewController::printItemType($itemDetails['itemid']); ?>
       </ol>
       
       <div class="row">
         <div class="col-sm-6">
-          <img class="img-thumbnail" src="http://placehold.it/650x350">
+          <img class="img-thumbnail" src="<?php print itemViewController::getItemImage($itemDetails['itemid']); ?>">
         </div>
 
         <div class="col-sm-6">
-          <h2>My Awesome Drill</h2>
-          <p class="lead">Owned by: <a href="#">Bob</a> <span class="badge badge-pill badge-success">Trusted User</span></p>
-          <p>Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum.<p>
+          <h2><?php print $itemDetails['name']; ?> </h2>
+          <?php if ($itemDetails['avaliability'] == ItemStatus::LoanedOut) { print '<span class="badge badge-secondary">Loaned out</span>';}?>
+          <p class="lead">Owned by: <a href="#"><?php print $itemDetails['postedby']; ?></a></p>
+          <p><?php print $itemDetails['description']; ?><p>
 
-          <form>
+          <form id="bidform">
             <div class="form-group row">
               <label class="col-form-label col-sm-4" for="inlineFormInputGroup">Current bid amount</label>
               <div class="input-group col-sm-8">
                 <div class="input-group-addon">$</div>
-                <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="15.00" readonly>
+                <input type="text" class="form-control" id="currentBidAmount" value="<?php print itemViewController::getCurrentBidAmount($itemDetails['itemid']);?>" readonly>
               </div>
             </div>
             <div class="form-group row">
               <label class="col-form-label col-sm-4" for="inlineFormInputGroup">New bid amount</label>
               <div class="input-group col-sm-8">
                 <div class="input-group-addon">$</div>
-                <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Bid">
+                <input type="text" class="form-control" id="amount" name="amount" placeholder="Enter bid amount">
               </div>
             </div>
 
             <div class="form-group row">
-              <button type="submit" class="btn btn-primary btn-lg btn-block">Submit bid</button>
+              <input type="hidden" name="type" value="bid">
+              <input type="hidden" id="itemid" name="itemid" value="<?php print $itemDetails['itemid']; ?>">
+              <input type="button" id="submitbid" class="btn btn-primary btn-lg btn-block" value ="Submit bid" <?php if ($itemDetails['avaliability'] == ItemStatus::LoanedOut) { print 'disabled'; } ?> >
             </div>
           </form>
         </div>
@@ -58,22 +67,37 @@ include 'includes/HtmlUtilities.php';
 
       <div class="row">
         <div class="col-sm-12">
+          <div class="alert" id="bidresults" role="alert" style="display: none;"> </div>
           <hr />
           <div class="card">
             <div class="card-header">
               <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
-                  <a class="nav-link active" href="#">Details</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Reviews</a>
+                  <a class="nav-link active" href="#">Previous bids</a>
                 </li>
               </ul>
             </div>
             <div class="card-body">
-              <h4 class="card-title">Special title treatment</h4>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+              <h4 class="card-title">Previously bidded by others</h4>
+              <p class="card-text">Note that winning bids are chosen by the user and not by the system.</p>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Bidded by</th>
+                    <th>Bid Amount</th>
+                    <th>Bidded on</th>
+                    <?php if (AppSession::getCurrentUser() == $itemDetails['postedby']) { 
+                      print '<th>Accept bid</th>'; 
+                    } else {
+                      print '<th>Cancel bid </th>';
+                    }
+                    ?>
+                  </tr>
+                </thead>
+                <tbody id="bidhistory">
+                  <?php print itemViewController::getAllBidsForItem($itemDetails['itemid']); ?>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -87,5 +111,6 @@ include 'includes/HtmlUtilities.php';
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/itemViewJs.js"></script>
   </body>
 </html>
