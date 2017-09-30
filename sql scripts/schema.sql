@@ -36,5 +36,5 @@ CREATE TABLE bids (
 
 CREATE TABLE itemimages (
     imagename VARCHAR(64) PRIMARY KEY,
-    itemid INTEGER REFERENCES items(itemid) ON DELETE CASCADE,
+    itemid INTEGER REFERENCES items(itemid) ON DELETE CASCADE
 );
