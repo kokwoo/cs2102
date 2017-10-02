@@ -48,23 +48,21 @@ class ItemAddController {
             return;
         }
 
-        var_dump($_POST);
-
         $db = DbConnection::getInstance();
         $user = AppSession::getCurrentUser();
         
         if (preg_match('~^image/p?jpeg$~i', $_FILES['imagefile']['type'])) 
         { 
-          $ext = '.jpg'; 
+            $ext = '.jpg'; 
         } 
         else if (preg_match('~^image/(x-)?png$~i', $_FILES['imagefile']['type'])) 
         { 
-          $ext = '.png'; 
+            $ext = '.png'; 
         } 
         else 
         { 
             var_dump($_FILES);
-          exit("file extension not supported");
+            exit("file extension not supported");
         } 
 
         $filename = $images_folder . uniqid("image") . $ext;
