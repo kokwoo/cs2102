@@ -23,25 +23,22 @@ class itemListController {
         $a = 0;
 
         while ($row = pg_fetch_assoc($result)) {
+            print '<tr>';
+            print '<td><img src="/cs2102/itemimages/' . $row['imagename'] . '"></td>';
+            print '<td>' . $row['name'] . '</td>';
+            print '<td>' . $row['type'] . '</td>';
+            print '<td>' . $row['price'] . '</td>';
 
-          if(($a%3)==0){
-            print '<div class="card-deck">';
-          }
-           print '<div class="card">';
-           print '<img class="card-img-top" src="itemimages/' . $row['imagename'] . '" alt="' . $row['name'] . '">';
-           print '<div class="card-body">';
-           print '<h4 class="card-title">' . $row['name'] . '</h4>';
-           print '<p class="card-text">' . $row['description'] . '</p>';
-           print '</div>';
-           print '<div class="card-footer">';
-           print '<small class="text-muted">Last updated 3 mins ago</small>';
-           print '</div></div>';
+            if ($row['avaliability'] == ItemStatus::Avaliable) {
+                print '<td> <span class="badge badge-success">Avaliable</span></td>';
+            } else {
+                print '<td> <span class="badge badge-secondary">Loaned out</span></td>';
+            }
 
-          if(($a%3)==0){
-            print '</div><br>';
-          }
-
-          $a = $a+1;
+            print '<td><form action="itemview.php" method="POST">';
+            print '<input type="hidden" value ="' . $row['itemid'] . '" name="itemid">';
+            print '<button class="btn btn-primary btn-sm view">View details</button></td>';
+            print '</tr>';
         }
 
     }
