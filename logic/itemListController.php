@@ -48,49 +48,6 @@ class itemListController {
 }
 ?>
 
-<div class="card-deck">
-	<div class="card">
-		<img class="card-img-top" src="itemimages/image59cfaa596f675.png" alt="Guitar ">
-		<div class="card-body">
-		<h4 class="card-title">Guitar </h4>
-		<p class="card-text">testtes</p>
-	</div>
-<div class="card-footer">
-<small class="text-muted">Last updated 3 mins ago</small>
-</div>
-</div>
-<div class="card">
-  <img class="card-img-top" src="itemimages/image59cfaa596f675.png" alt="Guitar ">
-  <div class="card-body">
-  <h4 class="card-title">Guitar </h4>
-  <p class="card-text">testtes</p>
-</div>
-<div class="card-footer">
-<small class="text-muted">Last updated 3 mins ago</small>
-</div>
-</div>
-<div class="card">
-  <img class="card-img-top" src="itemimages/image59cfaa596f675.png" alt="Guitar ">
-  <div class="card-body">
-  <h4 class="card-title">Guitar </h4>
-  <p class="card-text">testtes</p>
-</div>
-<div class="card-footer">
-<small class="text-muted">Last updated 3 mins ago</small>
-</div>
-</div>
-<div class="card">
-  <img class="card-img-top" src="itemimages/image59cfaa596f675.png" alt="Guitar ">
-  <div class="card-body">
-  <h4 class="card-title">Guitar </h4>
-  <p class="card-text">testtes</p>
-</div>
-<div class="card-footer">
-<small class="text-muted">Last updated 3 mins ago</small>
-</div>
-</div>
-</div>
-
 <!-- <div class="card-deck">
     <div class="card">
       <img class="card-img-top" src="itemimages/image59cfaa596f675.png" alt="Card image cap">
