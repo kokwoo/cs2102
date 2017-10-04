@@ -16,12 +16,14 @@ class SearchController {
         $user = AppSession::getCurrentUser();
         $db = DbConnection::getInstance();
 
-        if (isset($_POST['search'])) {
-            $result = $db -> executeQuery("SELECT * FROM items WHERE lower(name) LIKE $1", array("%" . strtolower($_POST['searchterm']) . "%"));
+        $query = "SELECT I.itemid, I.name, I.type, I.price, I.avaliability, II.imagename FROM items I, itemimages II WHERE I.itemid = II.itemid AND lower(name) LIKE $1";
+
+        if (isset($_GET['search'])) {
+            $result = $db -> executeQuery($query, array("%" . strtolower($_GET['searchterm']) . "%"));
 
             while ($row = pg_fetch_assoc($result)) {
                 print '<tr>';
-                print '<td> image</td>';
+                print '<td><img src ="itemimages/' . $row['imagename'] . '"></td>';
                 print '<td>' . $row['name'] . '</td>';
                 print '<td>' . $row['type'] . '</td>';
                 print '<td>' . $row['price'] . '</td>';
@@ -32,9 +34,9 @@ class SearchController {
                     print '<td> <span class="badge badge-secondary">Loaned out</span></td>';
                 }
 
-                print '<td><form action="itemview.php" method="POST">';
+                print '<td><form action="itemview.php" method="POST" id="' . $row['itemid'] . '">';
                 print '<input type="hidden" value ="' . $row['itemid'] . '" name="itemid">';
-                print '<button class="btn btn-primary btn-sm view">View details</button></td>';
+                print '<button class="btn btn-primary btn-sm view" type="button">View details</button></form></td>';
                 print '</tr>';
             }
         }

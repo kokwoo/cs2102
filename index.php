@@ -25,7 +25,7 @@ include 'includes/HtmlUtilities.php';
         <div class="col-sm-10">
           <hr>
 
-          <form action="search.php" method="POST">
+          <form action="search.php" method="GET">
             <div class="input-group">
               <input class="form-control" type="text" name="searchterm" placeholder="Search for a item to borrow" />
               <span class="input-group-btn">
