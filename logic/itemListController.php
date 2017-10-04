@@ -24,7 +24,7 @@ class itemListController {
 
         while ($row = pg_fetch_assoc($result)) {
             print '<tr>';
-            print '<td><img src="/cs2102/itemimages/' . $row['imagename'] . '"></td>';
+            print '<td><img src="itemimages/' . $row['imagename'] . '"></td>';
             print '<td>' . $row['name'] . '</td>';
             print '<td>' . $row['type'] . '</td>';
             print '<td>' . $row['price'] . '</td>';
