@@ -3,8 +3,11 @@ define('included', true);
 include 'includes/HtmlUtilities.php';
 include 'logic/itemViewController.php';
 
+// if (!isset($_POST['itemid'])) {
+//   header('location:index.php');
+// }
 if (!isset($_POST['itemid'])) {
-  header('location:index.php');
+  header('location:borrowitems.php');
 }
 
 $itemDetails = itemViewController::getItemDetails();
@@ -28,7 +31,7 @@ $itemDetails = itemViewController::getItemDetails();
       <ol class="breadcrumb">
         <?php itemViewController::printItemType($itemDetails['itemid']); ?>
       </ol>
-      
+
       <div class="row">
         <div class="col-sm-6">
           <img class="img-thumbnail" src="<?php print itemViewController::getItemImage($itemDetails['itemid']); ?>">
@@ -86,8 +89,8 @@ $itemDetails = itemViewController::getItemDetails();
                     <th>Bidded by</th>
                     <th>Bid Amount</th>
                     <th>Bidded on</th>
-                    <?php if (AppSession::getCurrentUser() == $itemDetails['postedby']) { 
-                      print '<th>Accept bid</th>'; 
+                    <?php if (AppSession::getCurrentUser() == $itemDetails['postedby']) {
+                      print '<th>Accept bid</th>';
                     } else {
                       print '<th>Cancel bid </th>';
                     }
