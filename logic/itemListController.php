@@ -20,8 +20,6 @@ class itemListController {
 
         $result = $db -> executeQuery("SELECT * FROM itemimages, items WHERE itemimages.itemid = items.itemid;", array());
 
-        $a = 0;
-
         while ($row = pg_fetch_assoc($result)) {
             print '<tr>';
             print '<td><img src="itemimages/' . $row['imagename'] . '"></td>';

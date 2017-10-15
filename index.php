@@ -1,5 +1,7 @@
 <?php
+define('included', true);
 include 'includes/HtmlUtilities.php';
+include 'logic/AccountOverviewController.php';
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +18,7 @@ include 'includes/HtmlUtilities.php';
 
   <body style="padding-bottom:70px;">
     <?php HtmlUtilities::printHeader(); ?>
-    
+
     <div class="container">
       <h1 class="display-4 text-center">Account Overview</h1>
 
@@ -47,8 +49,8 @@ include 'includes/HtmlUtilities.php';
           </form>
         </div>
       </div>
-
-      <div class="row mt-sm-3">
+      <?php AccountOverviewController::accountOverview(); ?>
+      <!-- <div class="row mt-sm-3">
         <div class="col-sm-12">
           <h3> Pending transactions </h3>
 
@@ -94,8 +96,8 @@ include 'includes/HtmlUtilities.php';
             </thead>
           </table>
         </div>
-      </div>
-    
+      </div> -->
+
     </div>
     <?php HtmlUtilities::printFooter(); ?>
 
@@ -105,5 +107,6 @@ include 'includes/HtmlUtilities.php';
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/loginJs.js"></script>
+    <script type="text/javascript" src="js/searchJs.js"></script>
   </body>
 </html>
