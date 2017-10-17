@@ -38,3 +38,11 @@ CREATE TABLE itemimages (
     imagename VARCHAR(64) PRIMARY KEY,
     itemid INTEGER REFERENCES items(itemid) ON DELETE CASCADE
 );
+
+CREATE TABLE transaction (
+	itemid INTEGER REFERENCES items(itemid),
+	transactionDate DATE,
+	userid VARCHAR(64) REFERENCES users(userid),
+	status INTEGER,
+	PRIMARY KEY (userid, itemid, status)
+);
