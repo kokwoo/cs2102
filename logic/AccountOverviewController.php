@@ -23,7 +23,6 @@ class AccountOverviewController {
           print '<tr>';
           print '<td><img src="itemimages/' . $row['imagename'] . '"></td>';
           print '<td>' . $row['name'] . '</td>';
-          print '<td> - </td>';
           print '<td>$' . $row['price'] . '</td>';
           print '<td> - </td>';
           print '</tr>';

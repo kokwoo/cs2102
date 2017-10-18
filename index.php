@@ -52,11 +52,12 @@ include 'logic/AccountOverviewController.php';
       <div class="row mt-sm-3">
         <div class="col-sm-12">
           <h3> Pending transactions </h3>
-
           <table class="table table-hover">
             <thead>
               <tr>
+                <th>Item Image</th>
                 <th>Item Name</th>
+                <th>Lent to</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -71,6 +72,7 @@ include 'logic/AccountOverviewController.php';
           <table class="table table-hover">
             <thead>
               <tr>
+                <th>Item Image</th>
                 <th>Item Name</th>
                 <th>Borrowed From</th>
                 <th>Fee</th>
@@ -83,13 +85,12 @@ include 'logic/AccountOverviewController.php';
 
       <div class="row mt-sm-3">
         <div class="col-sm-12">
-          <h3> Recently lent out </h3>
+          <h3> Recently listed by you </h3>
           <table class="table table-hover">
             <thead>
               <tr>
                 <th>Item Image</th>
                 <th>Item Name</th>
-                <th>Lent to</th>
                 <th>Fee</th>
                 <th>Status</th>
               </tr>

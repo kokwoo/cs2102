@@ -12,6 +12,12 @@ abstract class BidStatus {
 abstract class ItemStatus {
     const Avaliable = 1;
     const LoanedOut = 2;
+    const Returned = 3;
+}
+
+abstract class TransactionStatus {
+    const Return = 1;
+    const Loan = 2;
 }
 
 ?>
