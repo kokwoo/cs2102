@@ -17,7 +17,7 @@ class AccountOverviewController {
         $user = AppSession::getCurrentUser();
         $db = DbConnection::getInstance();
 
-        $result_lent_out = $db -> executeQuery("SELECT * FROM items i LEFT JOIN itemimages ii ON ii.itemid = i.itemid WHERE i.postedby=$1", array ($user));
+        $result_lent_out = $db -> executeQuery("SELECT * FROM items i LEFT JOIN itemimages ii ON ii.itemid = i.itemid WHERE i.postedby=$1 AND i.avaliability = $2", array ($user, ItemStatus::Avaliable));
 
         if (pg_num_rows($result_lent_out) === 0) {
             print '<tr>'; 
