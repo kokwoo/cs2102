@@ -27,7 +27,7 @@ CREATE TABLE items (
 
 CREATE TABLE bids (
   userid VARCHAR(64) REFERENCES users(userid),
-  itemid INTEGER REFERENCES items(itemid),
+  itemid INTEGER REFERENCES items(itemid) ON DELETE CASCADE,
   bidamount NUMERIC(12,2) NOT NULL CHECK(bidamount >= 0),
   biddedon TIMESTAMP DEFAULT now(),
   status INTEGER NOT NULL,

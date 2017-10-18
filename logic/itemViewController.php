@@ -27,6 +27,9 @@ class ItemViewController {
 
         } elseif ($_POST['type'] == 'cancelbid') {
             self::cancelBid($_POST['uid'], $_POST['iid'], $_POST['amt']);
+        
+        } elseif ($_POST['type'] == 'delete') {
+            self::deleteItem($_POST['itemid']);
         }
 
     }
@@ -245,6 +248,36 @@ EOT;
         if ($i === 0) {
             print '<tr><td colspan=4> There are no bids for this item yet! Be the first to bid!</td</tr>';
         }
+    }
+
+    public static function isUserAnAdmin() {
+        $db = DbConnection::getInstance();
+        $user = AppSession::getCurrentUser();
+
+        $result = $db -> executeQuery ("SELECT * FROM users WHERE userid = $1 AND role = 'admin' LIMIT 1", array($user));
+
+        if (pg_num_rows($result) === 1) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private static function deleteItem(String $iid) {
+        $db = DbConnection::getInstance();
+
+        if (!self::isUserAnAdmin()) {
+            return;
+        }
+
+        $result = $db -> executeQuery("DELETE FROM items WHERE itemid = $1", array($iid));
+
+        if (pg_affected_rows($result) === 1) {
+            print 'true';
+            return;
+        }
+
+        print 'false';
     }
 }
 

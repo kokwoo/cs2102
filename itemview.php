@@ -76,11 +76,26 @@ $itemDetails = itemViewController::getItemDetails();
             <div class="card-header">
               <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
-                  <a class="nav-link active" href="#">Previous bids</a>
+                  <a class="nav-link active" id="bidButton" href="#">Previous bids</a>
+                </li>
+                <li class="nav-item">
+                  <?php if (itemViewController::isUserAnAdmin()) {
+                    print '<a class="nav-link" id="adminButton" href="#">Admin</a>';
+                  }?>
                 </li>
               </ul>
             </div>
-            <div class="card-body">
+            <?php if (itemViewController::isUserAnAdmin()) {
+              print <<<EOT
+
+            <div class="card-body text-center" id="adminBody" style="display:none;">
+              <h4 class="card-title">Admin panel</h4>
+              <p class="card-text">You can delete this item here. Note that this process is not reversible.</p>
+              <a href="#" class="btn btn-danger" id="adminDelete">Delete this item</a>
+            </div>
+EOT;
+            } ?>
+            <div class="card-body" id="bidBody">
               <h4 class="card-title">Previously bidded by others</h4>
               <p class="card-text">Note that winning bids are chosen by the user and not by the system.</p>
               <table class="table table-hover">

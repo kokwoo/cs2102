@@ -158,6 +158,54 @@
 
     });
 
+    $('a#adminButton').click ( function () {
+      $('#adminBody').show();
+      $('#bidBody').hide();
+
+      $('#bidButton').removeClass("active");
+      $('#adminButton').addClass("active");
+    });
+
+    $('a#bidButton').click ( function () {
+      $('#adminBody').hide();
+      $('#bidBody').show();
+
+      $('#bidButton').addClass("active");
+      $('#adminButton').removeClass("active");
+    });
+
+    $('a#adminDelete').click( function() {
+
+      var confirmPlusChop = confirm("Are you sure you want to delete this item?");
+
+      if (!confirmPlusChop) {
+        return;
+      }
+
+      $.ajax({
+ 
+            // The URL for the request
+            url: "logic/itemViewController.php",
+         
+            // The data to send (will be converted to a query string)
+            data: {type:'delete', itemid:$("input#itemid").val()},
+         
+            // Whether this is a POST or GET request
+            type: "POST",
+         
+            // The type of data we expect back
+            dataType : 'text'
+        })
+
+       .done(function( data ) {
+        if (data == "true") {
+          alert("Item has been deleted.");
+          window.location.replace("index.php");
+        }
+      });
+
+    });
+
     $("button.cancelbid").click( function() {
       var confirmPlusChop = confirm("Are you sure you want to cancel this bid?");
 
