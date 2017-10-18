@@ -49,8 +49,7 @@ include 'logic/AccountOverviewController.php';
           </form>
         </div>
       </div>
-      <?php AccountOverviewController::accountOverview(); ?>
-      <!-- <div class="row mt-sm-3">
+      <div class="row mt-sm-3">
         <div class="col-sm-12">
           <h3> Pending transactions </h3>
 
@@ -88,15 +87,23 @@ include 'logic/AccountOverviewController.php';
           <table class="table table-hover">
             <thead>
               <tr>
+                <th>Item Image</th>
                 <th>Item Name</th>
                 <th>Lent to</th>
                 <th>Fee</th>
                 <th>Status</th>
               </tr>
             </thead>
+
+            <tbody>
+              
+              <?php AccountOverviewController::getRecentlyLentOut(); ?>
+
+            </tbody>
+
           </table>
         </div>
-      </div> -->
+      </div>
 
     </div>
     <?php HtmlUtilities::printFooter(); ?>
