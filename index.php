@@ -41,8 +41,9 @@ include 'logic/AccountOverviewController.php';
 
               <div class="collapse" id="collapseExample">
                 <div class="card card-body">
+                  <h4 class="card-title">For advanced users</h4>
                   <input type="hidden" name="search" value="true">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                  
                 </div>
               </div>
             </div>
