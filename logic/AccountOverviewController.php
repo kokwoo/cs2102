@@ -18,7 +18,7 @@ class AccountOverviewController {
         $db = DbConnection::getInstance();
 
         // $result_borrowed = $db -> executeQuery("SELECT * FROM itemimages, items WHERE itemimages.itemid = items.itemid;", array());
-        $result_lent_out = $db -> executeQuery("SELECT * FROM items, users WHERE items.postedby=$1", array ($user));
+        $result_lent_out = $db -> executeQuery("SELECT * FROM items WHERE items.postedby=$1", array ($user));
 
         // print '<div class="row mt-sm-3">';
         // print '<div class="col-sm-12">';
