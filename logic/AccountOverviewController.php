@@ -28,13 +28,31 @@ class AccountOverviewController {
         }
 
         while ($row = pg_fetch_assoc($result_lent_out)) {
-          print '<tr>';
+          print '<tr class ="lentoutrow" data-id="' . $row["itemid"] . '">';
           print '<td><img src="itemimages/' . $row['imagename'] . '"></td>';
           print '<td>' . $row['name'] . '</td>';
           print '<td>$' . $row['price'] . '</td>';
           print '<td> - </td>';
           print '</tr>';
         }
+    }
+
+    public static function getPendingTransactions() {
+        $user = AppSession::getCurrentUser();
+        $db = DbConnection::getInstance();
+
+        $query = <<<EOT
+        SELECT ii.imagename, i.name, b.userid, i.status
+        FROM items i, bids b, itemimages ii, transactions t
+        WHERE i.itemid = ii.itemid
+        AND b.itemid = i.itemid
+        AND t.itemid = i.itemid
+        AND t.itemid IS NULL
+        AND b.status = $1
+        AND i.status = $2
+EOT;
+      
+      $result = $db -> executeQuery($query, array(BidStatus::Accepted, ItemStatus::LoanedOut));
     }
 }
 ?>

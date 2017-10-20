@@ -206,6 +206,60 @@
 
     });
 
+    $('button.adminDeleteBid').click(function() {
+      var confirmPlusChop = confirm("Are you sure you want exercise your admin rights to cancel this bid?");
+
+      if (!confirmPlusChop) {
+        return;
+      }
+
+      var tr = $(this).closest('tr');
+
+      var uid = tr.data('uid');
+      var iid = tr.data('iid');
+      var amt = tr.data('amt');
+
+      $.ajax({
+ 
+            // The URL for the request
+            url: "logic/itemViewController.php",
+         
+            // The data to send (will be converted to a query string)
+            data: {type:'adminDeleteBid', uid: uid, iid: iid, amt: amt},
+         
+            // Whether this is a POST or GET request
+            type: "POST",
+         
+            // The type of data we expect back
+            dataType : 'text'
+        })
+      .done(function( data ) {
+
+        if (data == 'true') {
+          $.ajax({
+          
+                   // The URL for the request
+                   url: "logic/itemViewController.php",
+                
+                   // The data to send (will be converted to a query string)
+                   data: {type:'refreshallbids', itemid:$("input#itemid").val()},
+                
+                   // Whether this is a POST or GET request
+                   type: "POST",
+                
+                   // The type of data we expect back
+                   dataType : 'text'
+               })
+          .done(function( data ) {
+               $('#bidhistory').html(data);
+               $("#bidhistory").hide();
+               $("#bidhistory").fadeIn( "slow" );
+             });
+        }
+
+      });
+    });
+
     $("button.cancelbid").click( function() {
       var confirmPlusChop = confirm("Are you sure you want to cancel this bid?");
 
@@ -218,7 +272,6 @@
       var uid = tr.data('uid');
       var iid = tr.data('iid');
       var amt = tr.data('amt');
-      console.log("hi");
 
       $.ajax({
  

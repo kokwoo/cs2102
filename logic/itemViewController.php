@@ -30,16 +30,24 @@ class ItemViewController {
         
         } elseif ($_POST['type'] == 'delete') {
             self::deleteItem($_POST['itemid']);
+
+        } elseif ($_POST['type'] == 'adminDeleteBid') {
+            self::cancelbid($_POST['uid'], $_POST['iid'], $_POST['amt'], true);
         }
 
     }
 
-    private static function cancelBid(string $uid, string $iid, string $amt) {
+    private static function cancelBid(string $uid, string $iid, string $amt, $admin=false) {
         $db = DbConnection::getInstance();
         $user = AppSession::getCurrentUser();
         $amt = floatval($amt);
 
-        if ($uid != $user) {
+        if (!$admin && $uid != $user) {
+            print '1';
+            return;
+        }
+
+        if ($admin && !self::isUserAnAdmin()) {
             print '1';
             return;
         }
@@ -239,6 +247,8 @@ EOT;
                 print '<td><button class="btn btn-success btn-sm" ' . $accepted . '>Bid accepted </button></td>';
             } else if (AppSession::getCurrentUser() == $values[$j]['userid'] && $j != $acceptedBid) {
                 print '<td><button class="cancelbid btn btn-danger btn-sm" ' . $accepted . '>Cancel bid</button></td>';
+            } else if ($accepted !== 'disabled' && self::isUserAnAdmin()) {
+                print '<td><button class="adminDeleteBid btn btn-danger btn-sm">Delete bid(admin)</button></td>';
             } else {
                 print '<td></td>';
             }
