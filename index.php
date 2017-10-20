@@ -42,8 +42,43 @@ include 'logic/AccountOverviewController.php';
               <div class="collapse" id="collapseExample">
                 <div class="card card-body">
                   <h4 class="card-title">For advanced users</h4>
+                  <br/>
                   <input type="hidden" name="search" value="true">
-                  
+
+                   <div class="row">
+                    <div class="col-sm-6 form-group">
+                      <label> Item type </label>
+                      <select class="form-control" placeholder="First name"></select>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                      <label> Item subtype </label>
+                      <select class="form-control" placeholder="Last name"></select>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <label> Get items with fees from</label>
+                      <div class="input-group">
+                        <span class="input-group-addon">$</span>
+                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                        <span class="input-group-btn">
+                          <button class="btn btn-success" type="button">No charge</button>
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <label> Get items with fees to</label>
+                      <div class="input-group">
+                        <span class="input-group-addon">$</span>
+                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                        <span class="input-group-btn">
+                          <button class="btn btn-success" type="button">No charge</button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
