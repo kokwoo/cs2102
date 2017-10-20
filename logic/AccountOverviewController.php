@@ -63,12 +63,12 @@ EOT;
         WHERE i.itemid = ii.itemid
         AND b.itemid = i.itemid
         AND t.itemid = i.itemid
-        AND t.itemid IS NULL
-        AND b.status = $1
-        AND i.avaliability = $2
+        AND (t.itemid IS NULL OR t.status = $1)
+        AND b.status = $2
+        AND i.avaliability = $3
 EOT;
       
-      $result = $db -> executeQuery($query, array(BidStatus::Accepted, ItemStatus::LoanedOut));
+      $result = $db -> executeQuery($query, array(TransactionStatus::Loan, BidStatus::Accepted, ItemStatus::LoanedOut));
 
       if (pg_num_rows($result) === 0) {
             print '<tr>'; 
@@ -77,6 +77,11 @@ EOT;
 
             return;
         }
+    }
+
+    public static function getHistory() {
+        $user = AppSession::getCurrentUser();
+        $db = DbConnection::getInstance();
     }
 }
 ?>

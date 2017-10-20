@@ -72,24 +72,6 @@ include 'logic/AccountOverviewController.php';
 
       <div class="row mt-sm-3">
         <div class="col-sm-12">
-          <h3> Recently borrowed </h3>
-
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th>Item Image</th>
-                <th>Item Name</th>
-                <th>Borrowed From</th>
-                <th>Fee</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-          </table>
-        </div>
-      </div>
-
-      <div class="row mt-sm-3">
-        <div class="col-sm-12">
           <h3> Recently listed by you </h3>
           <form id="listedView" action="itemview.php" method="POST"></form>
           <table class="table table-hover">
@@ -108,6 +90,28 @@ include 'logic/AccountOverviewController.php';
 
             </tbody>
 
+          </table>
+        </div>
+      </div>
+
+
+      <div class="row mt-sm-3">
+        <div class="col-sm-12">
+          <h3> History </h3>
+
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Item Image</th>
+                <th>Item Name</th>
+                <th>Borrowed or Lended</th>
+                <th>Counterparty username </th>
+                <th>Fee</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php AccountOverviewController::getHistory(); ?>
+            </tbody>
           </table>
         </div>
       </div>
