@@ -37,7 +37,7 @@ EOT;
 
         if (pg_num_rows($result_lent_out) === 0) {
             print '<tr>'; 
-            print "<td class='text-center' colspan=4> <p class ='lead'> Aw! It looks like you don't have any items lent out! Why not start by listing some? </p></td>";
+            print "<td class='text-center' colspan=5> <p class ='lead'> Aw! It looks like you don't have any items lent out! Why not start by listing some? </p></td>";
             print '</tr>';
 
             return;
@@ -58,17 +58,25 @@ EOT;
         $db = DbConnection::getInstance();
 
         $query = <<<EOT
-        SELECT ii.imagename, i.name, b.userid, i.status
-        FROM items i, bids b, itemimages ii, transactions t
+        SELECT ii.imagename, i.name, b.userid, i.avaliability
+        FROM items i, bids b, itemimages ii, transaction t
         WHERE i.itemid = ii.itemid
         AND b.itemid = i.itemid
         AND t.itemid = i.itemid
         AND t.itemid IS NULL
         AND b.status = $1
-        AND i.status = $2
+        AND i.avaliability = $2
 EOT;
       
       $result = $db -> executeQuery($query, array(BidStatus::Accepted, ItemStatus::LoanedOut));
+
+      if (pg_num_rows($result) === 0) {
+            print '<tr>'; 
+            print "<td class='text-center' colspan=4> <p class ='lead'> There are no pending transactions at this time. </p></td>";
+            print '</tr>';
+
+            return;
+        }
     }
 }
 ?>

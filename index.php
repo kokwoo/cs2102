@@ -62,6 +62,10 @@ include 'logic/AccountOverviewController.php';
                 <th>Status</th>
               </tr>
             </thead>
+
+            <tbody>
+              <?php AccountOverviewController::getPendingTransactions() ?>
+            </tbody>
           </table>
         </div>
       </div>
