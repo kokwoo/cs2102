@@ -87,6 +87,7 @@ include 'logic/AccountOverviewController.php';
       <div class="row mt-sm-3">
         <div class="col-sm-12">
           <h3> Recently listed by you </h3>
+          <form id="listedView" action="itemview.php" method="POST"></form>
           <table class="table table-hover">
             <thead>
               <tr>
