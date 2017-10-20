@@ -92,8 +92,8 @@ include 'logic/AccountOverviewController.php';
               <tr>
                 <th>Item Image</th>
                 <th>Item Name</th>
-                <th>Fee</th>
-                <th>Status</th>
+                <th>Initial listing price</th>
+                <th>Highest bid amount</th>
               </tr>
             </thead>
 
