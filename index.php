@@ -95,6 +95,7 @@ include 'logic/AccountOverviewController.php';
                 <th>Item Name</th>
                 <th>Lent to</th>
                 <th>Status</th>
+                <th></th>
               </tr>
             </thead>
 

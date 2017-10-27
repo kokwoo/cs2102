@@ -18,6 +18,8 @@ abstract class ItemStatus {
 abstract class TransactionStatus {
     const Return = 1;
     const Loan = 2;
+    const LoanAndConfirmed = 3;
+    const ReturnAndConfirmed = 4;
 }
 
 ?>

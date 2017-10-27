@@ -35,10 +35,30 @@ class AccountOverviewController {
             return;
         }
 
-        $query = "INSERT INTO transaction VALUES ($1, now(), $2, $3)";
-        $status = ($return) ? TransactionStatus::Return : TransactionStatus::Loan;
+        $query = "";
+        $array = array();
 
-        $result = $db -> executeQuery($query, array($iid, $user, $status));
+        if ($r['postedby'] == $user && !$return) {
+            $query = "INSERT INTO transaction VALUES ($1, now(), $2, $3)";
+            $array = array($iid, $user, TransactionStatus::Loan);
+        
+        } else if ($r['postedby'] == $user && $return) {
+            $query = "UPDATE transaction SET status = $1 WHERE itemid=$2 AND userid=$3 AND status=$4";
+            $array = array(TransactionStatus::ReturnAndConfirmed, $iid, $r['userid'], TransactionStatus::Return);
+
+        } else if ($r['userid'] == $user && !$return) {
+            $query = "UPDATE transaction SET status = $1 WHERE itemid=$2 AND userid=$3 AND status=$4";
+            $array = array(TransactionStatus::LoanAndConfirmed, $iid, $r['postedby'], TransactionStatus::Loan);
+
+        } else if ($r['userid'] == $user && $return) {
+            $query = "INSERT INTO transaction VALUES ($1, now(), $2, $3)";
+            $array = array($iid, $user , TransactionStatus::Return);
+
+        } else {
+            return;
+        }
+
+        $result = $db -> executeQuery($query, $array);
 
         if (pg_affected_rows($result) === 1) {
             print 'true';
@@ -93,18 +113,35 @@ EOT;
         $db = DbConnection::getInstance();
 
         $query = <<<EOT
-        SELECT ii.imagename, i.name, b.userid, i.avaliability, t.status, i.itemid
+        SELECT ii.imagename, i.name, b.userid, i.avaliability, t.status, i.itemid, i.postedby, 'loan' as "itemstatus"
         FROM items i
         LEFT JOIN itemimages ii ON i.itemid = ii.itemid
         LEFT JOIN bids b ON b.itemid = i.itemid
         LEFT JOIN transaction t ON t.itemid = i.itemid
-        WHERE (t.itemid IS NULL OR t.status = $1)
-        AND b.status = $2
-        AND i.avaliability = $3
-        AND i.postedby = $4
+        WHERE b.status = $1
+        AND i.avaliability = $2
+        AND ( (i.postedby = $3 AND t.itemid IS NULL) OR (b.userid = $4 AND t.status = $5) )
+        AND NOT EXISTS (SELECT * FROM transaction t2 WHERE t2.userid = b.userid AND t2.itemid = i.itemid AND (t2.status = $6 OR t2.status = $7))
+
+        UNION
+
+        SELECT ii.imagename, i.name, b.userid, i.avaliability, t.status, i.itemid, i.postedby, 'return' as "itemstatus"
+        FROM items i
+        LEFT JOIN itemimages ii ON i.itemid = ii.itemid
+        LEFT JOIN bids b ON b.itemid = i.itemid
+        LEFT JOIN transaction t ON t.itemid = i.itemid
+        WHERE b.status = $8
+        AND i.avaliability = $9
+        AND ( (i.postedby = $10 AND (t.status = $11 OR ( t.status = $12 
+                AND NOT EXISTS (SELECT * FROM transaction t4 WHERE t4.userid = b.userid AND t4.itemid = i.itemid AND t4.status=$13) )))
+            OR (b.userid = $14 AND (t.status = $15 AND NOT EXISTS (SELECT * FROM transaction t5 WHERE t5.userid = b.userid AND t5.itemid = i.itemid AND t5.status=$16) ) ) )
+        AND NOT EXISTS (SELECT * FROM transaction t3 WHERE t3.userid = b.userid AND t3.itemid = i.itemid AND t3.status = $17)
 EOT;
       
-      $result = $db -> executeQuery($query, array(TransactionStatus::Loan, BidStatus::Accepted, ItemStatus::LoanedOut, $user));
+      $loan_array = array(BidStatus::Accepted, ItemStatus::LoanedOut, $user, $user, TransactionStatus::Loan, TransactionStatus::Return, TransactionStatus::ReturnAndConfirmed);
+      $return_array = array(BidStatus::Accepted, ItemStatus::LoanedOut, $user, TransactionStatus::Return, TransactionStatus::LoanAndConfirmed, TransactionStatus::Return, $user, TransactionStatus::LoanAndConfirmed, TransactionStatus::Return, TransactionStatus::ReturnAndConfirmed);
+
+      $result = $db -> executeQuery($query, array_merge($loan_array, $return_array));
 
         if (pg_num_rows($result) === 0) {
             print '<tr>'; 
@@ -120,15 +157,35 @@ EOT;
           print '<td>' . $row['name'] . '</td>';
           print '<td>' . $row['userid'] . '</td>';
 
-          if (is_null($row['status'])) {
+          $button = "<td>";
+          $realbutton = "</td>";
+
+        if ($user == $row['postedby'] && is_null($row['status']) && $row['itemstatus'] == 'loan') {
             print '<td>Pending loan out</td>';
-            print '<td><button class="btn btn-sm btn-primary confirmaction">Loaned out</button>';
-            print '<button class="loanout hidden btn btn-sm btn-warning">Confirm?</button></td>';
-          } else {
+            $button = '<td><button class="btn btn-sm btn-primary confirmaction">Item sent out</button>';
+            $realbutton = '<button class="loanout hidden btn btn-sm btn-warning">Confirm?</button></td>';
+
+        } else if ($user == $row['postedby'] && $row['status'] == TransactionStatus::LoanAndConfirmed && $row['itemstatus'] == 'return') {
+            print '<td>Pending return by borrower</td>';
+
+        } else if ($user == $row['postedby'] && !is_null($row['status']) && $row['itemstatus'] == 'return') {
+            print '<td>Pending return confirmation</td>';
+            $button = '<td><button class="btn btn-sm btn-success confirmaction">Item returned</button>';
+            $realbutton = '<button class="returned hidden btn btn-sm btn-warning">Confirm?</button></td>';
+          
+        } else if ($user == $row['userid'] && $row['status'] == TransactionStatus::Loan && $row['itemstatus'] == 'loan') {
+            print '<td>Pending receive confirmation</td>';
+            $button = '<td><button class="btn btn-sm btn-success confirmaction">Received item</button>';
+            $realbutton = '<button class="loanout hidden btn btn-sm btn-warning">Confirm?</button></td>';
+          
+        } else if ($user == $row['userid'] && $row['status'] == TransactionStatus::LoanAndConfirmed && $row['itemstatus'] == 'return') {
             print '<td>Pending return</td>';
-            print '<td><button class="btn btn-sm btn-success confirmaction">Item returned</button>';
-            print '<button class="returned hidden btn btn-sm btn-warning">Confirm?</button></td>';
-          }
+            $button = '<td><button class="btn btn-sm btn-success confirmaction">Return item</button>';
+            $realbutton = '<button class="returned hidden btn btn-sm btn-warning">Confirm?</button></td>';
+        }
+
+          print $button;
+          print $realbutton;
           
           print '</tr>';
         }
