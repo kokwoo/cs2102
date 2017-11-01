@@ -40,7 +40,7 @@ $itemDetails = itemViewController::getItemDetails();
         <div class="col-sm-6">
           <h2><?php print $itemDetails['name']; ?> </h2>
           <?php if ($itemDetails['avaliability'] == ItemStatus::LoanedOut) { print '<span class="badge badge-secondary">Loaned out</span>';}?>
-          <p class="lead">Owned by: <a href="#"><?php print $itemDetails['postedby']; ?></a></p>
+          <p class="lead">Owned by: <a href="profilepage.php?user=<?php print $itemDetails['postedby']; ?>"><?php print $itemDetails['postedby']; ?></a></p>
           <p><?php print $itemDetails['description']; ?><p>
 
           <form id="bidform">
