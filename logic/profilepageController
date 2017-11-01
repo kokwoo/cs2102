@@ -1,0 +1,12 @@
+<?php
+
+if (!defined('included')) {
+    include 'AppSession.php';
+    include '../DbConnection.php';
+    include '../includes/GlobalConstants.php';
+} else {
+    include 'includes/GlobalConstants.php';
+}
+
+
+?>
