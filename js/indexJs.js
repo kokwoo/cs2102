@@ -51,4 +51,11 @@ $( document ).ready(function() {
        sendAjaxRequestForTransaction(tr, 'return', iid); 
     });
 
+    $('.free').click (function() {
+      var div = $(this).closest('div');
+      var input = div.children('input').first();
+
+      input.attr('value', '0');
+    });
+
 });

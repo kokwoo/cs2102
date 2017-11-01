@@ -45,14 +45,21 @@ include 'logic/AccountOverviewController.php';
                   <br/>
                   <input type="hidden" name="search" value="true">
 
+                  <div class="row">
+                    <div class="col-sm-12 form-group">
+                      <label> Posted by </label>
+                      <input type="text" class="form-control" name="posted" aria-label="Enter user id">
+                    </div>
+                  </div>
+
                    <div class="row">
                     <div class="col-sm-6 form-group">
                       <label> Item type </label>
-                      <select class="form-control" placeholder="First name"></select>
+                      <select class="form-control" name="item_super" placeholder="First name"></select>
                     </div>
                     <div class="col-sm-6 form-group">
                       <label> Item subtype </label>
-                      <select class="form-control" placeholder="Last name"></select>
+                      <select class="form-control" name="item_type" placeholder="Last name"></select>
                     </div>
                   </div>
 
@@ -61,9 +68,9 @@ include 'logic/AccountOverviewController.php';
                       <label> Get items with fees from</label>
                       <div class="input-group">
                         <span class="input-group-addon">$</span>
-                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                        <input type="text" class="form-control" name="amt_from" aria-label="Amount (to the nearest dollar)">
                         <span class="input-group-btn">
-                          <button class="btn btn-success" type="button">No charge</button>
+                          <button class="btn btn-success free" type="button">No charge</button>
                         </span>
                       </div>
                     </div>
@@ -72,9 +79,9 @@ include 'logic/AccountOverviewController.php';
                       <label> Get items with fees to</label>
                       <div class="input-group">
                         <span class="input-group-addon">$</span>
-                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                        <input type="text" class="form-control" name="amt_to" aria-label="Amount (to the nearest dollar)">
                         <span class="input-group-btn">
-                          <button class="btn btn-success" type="button">No charge</button>
+                          <button class="btn btn-success free" type="button">No charge</button>
                         </span>
                       </div>
                     </div>
@@ -126,28 +133,6 @@ include 'logic/AccountOverviewController.php';
 
             </tbody>
 
-          </table>
-        </div>
-      </div>
-
-
-      <div class="row mt-sm-3">
-        <div class="col-sm-12">
-          <h3> History </h3>
-
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th>Item Image</th>
-                <th>Item Name</th>
-                <th>Borrowed or Lended</th>
-                <th>Counterparty username </th>
-                <th>Fee</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php AccountOverviewController::getHistory(); ?>
-            </tbody>
           </table>
         </div>
       </div>
