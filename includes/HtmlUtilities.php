@@ -17,7 +17,8 @@ EOT;
 
     if (AppSession::doesPageRequireLogin($_SERVER['REQUEST_URI'])) {
       print '<a class="nav-item nav-link active" href="index.php">Home</a>
-      <a class="nav-item nav-link" href="additem.php">Lend Items</a>';
+      <a class="nav-item nav-link" href="additem.php">Lend Items</a>
+      <a class="nav-item nav-link" href="borrowitems.php">Borrow Items</a>';
     }
 
       print <<<EOT

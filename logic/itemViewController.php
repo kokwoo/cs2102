@@ -185,9 +185,14 @@ EOT;
 EOT;
 
         $result = $db -> executeQuery($query, array($itemid));
+        $type_tree = array();
 
         while ($row = pg_fetch_assoc($result)) {
-            print '<li class="breadcrumb-item"><a href="#">' . $row['type'] . '</a></li>';
+            array_push($type_tree, $row['type']);
+        }
+
+        foreach ( array_reverse($type_tree) as $type) {
+            print '<li class="breadcrumb-item"><a href="#">' . $type . '</a></li>';
         }
     }
 

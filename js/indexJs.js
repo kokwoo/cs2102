@@ -22,6 +22,31 @@ function sendAjaxRequestForTransaction(tr, request, iid) {
     });
 }
 
+function findAllSubTypes() {
+    $.ajax({
+    
+          // The URL for the request
+          url: "logic/ItemAddController.php",
+       
+          // The data to send (will be converted to a query string)
+          data: {request:'subtypes', supertype:$( "#item_super" ).val()},
+       
+          // Whether this is a POST or GET request
+          type: "POST",
+       
+          // The type of data we expect back
+          dataType : 'text'
+      })
+        // Code to run if the request succeeds (is done);
+        // The response is passed to the function
+        .done(function( data ) {
+           if (data != 'false') {
+             $( "#item_type" ).html(data);
+             $("#item_type").val("");
+           }
+        });
+}
+
 $( document ).ready(function() {
 
     $('tr.lentoutrow').click (function() {
@@ -56,6 +81,20 @@ $( document ).ready(function() {
       var input = div.children('input').first();
 
       input.attr('value', '0');
+    });
+
+    $( "#searchbyuser" ).autocomplete({
+      source: "logic/AccountOverviewController.php",
+      minLength: 2
+    });
+
+
+    $('select#item_super').change( function() {
+        if ($( "#item_super" ).val() != "") {
+            findAllSubTypes();
+        } else {
+            $("#item_type").val("");
+        }
     });
 
 });

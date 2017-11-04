@@ -13,12 +13,14 @@ if (!defined('included')) {
 class AccountOverviewController {
 
     public static function handleRequests() {
-        if ($_POST['request'] == 'return') {
+        if (isset($_GET['term'])) {
+            self::handleAjaxAutoComplete();
+        
+        } else if ($_POST['request'] == 'return') {
             self::addItemTransaction($_POST['iid'], true);
         
-        } elseif ($_POST['request'] == 'loan') {
+        } else if ($_POST['request'] == 'loan') {
             self::addItemTransaction($_POST['iid'], false);
-        
         }
     }
 
@@ -191,9 +193,27 @@ EOT;
         }
     }
 
-    public static function getHistory() {
-        $user = AppSession::getCurrentUser();
+    private static function handleAjaxAutoComplete() {
         $db = DbConnection::getInstance();
+        $query = $db -> executeQuery("SELECT userid FROM users WHERE userid LIKE $1", array($_GET['term'] . '%'));
+
+        $result = "[";
+
+        while ($row = pg_fetch_assoc($query)) {
+            $result = $result . "\"" . $row['userid'] . "\",";
+        }
+
+        $result = substr($result, 0, -1);
+        print $result . "]";
+    }
+
+    public static function printAllSuperTypes() {
+        $db = DbConnection::getInstance();
+        $result = $db -> executeQuery("SELECT type FROM types WHERE superType IS NULL", array());
+
+        while($row = pg_fetch_assoc($result)) {
+            print '<option value ="' . $row['type'] . '">' . $row['type'] . '</option>';
+        }
     }
 }
 

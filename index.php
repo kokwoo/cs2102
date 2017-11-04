@@ -14,6 +14,7 @@ include 'logic/AccountOverviewController.php';
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="includes/jquery-ui.min.css"></style>
   </head>
 
   <body style="padding-bottom:70px;">
@@ -48,18 +49,23 @@ include 'logic/AccountOverviewController.php';
                   <div class="row">
                     <div class="col-sm-12 form-group">
                       <label> Posted by </label>
-                      <input type="text" class="form-control" name="posted" aria-label="Enter user id">
+                      <input type="text" class="form-control" name="posted" id="searchbyuser" aria-label="Enter user id">
                     </div>
                   </div>
 
                    <div class="row">
                     <div class="col-sm-6 form-group">
                       <label> Item type </label>
-                      <select class="form-control" name="item_super" placeholder="First name"></select>
+                      <select class="form-control" name="item_super" id="item_super" placeholder="First name">
+                        <option value=""></option>
+                        <?php AccountOverviewController::printAllSuperTypes();?>
+                      </select>
                     </div>
                     <div class="col-sm-6 form-group">
                       <label> Item subtype </label>
-                      <select class="form-control" name="item_type" placeholder="Last name"></select>
+                      <select class="form-control" name="item_type" id="item_type" placeholder="Last name">
+                        <option value=""></option>
+                      </select>
                     </div>
                   </div>
 
@@ -145,6 +151,7 @@ include 'logic/AccountOverviewController.php';
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="includes/jquery-ui.min.js"></script>
     <script type="text/javascript" src="js/indexJs.js"></script>
   </body>
 </html>
